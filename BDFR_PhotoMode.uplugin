@@ -1,0 +1,19 @@
+{
+  "FileVersion": 3,
+  "Version": 2,
+  "VersionName": "0.2.0",
+  "FriendlyName": "BDFR Photo Mode",
+  "Description": "Extensible runtime photo mode for Unreal Engine with free camera, pose presets and selfie mode.",
+  "Category": "BDFR|Camera",
+  "CreatedBy": "BDFR",
+  "CanContainContent": true,
+  "IsBetaVersion": true,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "BDFR_PhotoMode",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
+}
