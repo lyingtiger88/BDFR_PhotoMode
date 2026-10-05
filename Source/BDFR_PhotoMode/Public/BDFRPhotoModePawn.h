@@ -7,6 +7,7 @@
 
 class AActor;
 class UCameraComponent;
+class UCineCameraComponent;
 class USceneComponent;
 
 UCLASS(BlueprintType)
@@ -24,6 +25,12 @@ public:
 
     UFUNCTION(BlueprintPure, Category="BDFR|Photo Mode|Camera")
     float GetPhotoFOV() const;
+
+    UFUNCTION(BlueprintCallable, Category="BDFR|Photo Mode|Camera")
+    void SetCameraRoll(float RollDegrees);
+
+    UFUNCTION(BlueprintCallable, Category="BDFR|Photo Mode|Cinematic")
+    void SetCinematicLens(float FocalLengthMm, float Aperture, float FocusDistanceCm);
 
     UFUNCTION(BlueprintCallable, Category="BDFR|Photo Mode|Camera")
     void SetMoveSpeed(float NewSpeed);
@@ -54,7 +61,7 @@ protected:
     TObjectPtr<USceneComponent> SceneRoot;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="BDFR|Photo Mode")
-    TObjectPtr<UCameraComponent> Camera;
+    TObjectPtr<UCineCameraComponent> Camera;
 
 private:
     void TickFreeCamera(class APlayerController* PC, float EffectiveDelta);
