@@ -11,6 +11,7 @@ public class BDFR_PhotoMode : ModuleRules
             "Core",
             "CoreUObject",
             "Engine",
+            "CinematicCamera",
             "InputCore",
             "DeveloperSettings"
         });
