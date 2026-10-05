@@ -2,6 +2,7 @@
 
 #include "BDFRPhotoModeSettings.h"
 #include "Camera/CameraComponent.h"
+#include "CineCameraComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/Actor.h"
@@ -19,7 +20,7 @@ ABDFRPhotoModePawn::ABDFRPhotoModePawn()
     SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
     SetRootComponent(SceneRoot);
 
-    Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("PhotoCamera"));
+    Camera = CreateDefaultSubobject<UCineCameraComponent>(TEXT("PhotoCamera"));
     Camera->SetupAttachment(SceneRoot);
     Camera->bUsePawnControlRotation = false;
 
@@ -187,6 +188,32 @@ void ABDFRPhotoModePawn::SetPhotoFOV(float NewFOV)
 float ABDFRPhotoModePawn::GetPhotoFOV() const
 {
     return Camera ? Camera->FieldOfView : 0.0f;
+}
+
+void ABDFRPhotoModePawn::SetCameraRoll(float RollDegrees)
+{
+    FRotator Rotation = GetActorRotation();
+    Rotation.Roll = FMath::Clamp(RollDegrees, -180.0f, 180.0f);
+    SetActorRotation(Rotation);
+}
+
+void ABDFRPhotoModePawn::SetCinematicLens(
+    float FocalLengthMm,
+    float Aperture,
+    float FocusDistanceCm)
+{
+    if (!Camera)
+    {
+        return;
+    }
+
+    Camera->SetCurrentFocalLength(FMath::Clamp(FocalLengthMm, 8.0f, 300.0f));
+    Camera->SetCurrentAperture(FMath::Clamp(Aperture, 1.0f, 32.0f));
+
+    FCameraFocusSettings Focus = Camera->FocusSettings;
+    Focus.FocusMethod = ECameraFocusMethod::Manual;
+    Focus.ManualFocusDistance = FMath::Max(1.0f, FocusDistanceCm);
+    Camera->FocusSettings = Focus;
 }
 
 void ABDFRPhotoModePawn::SetMoveSpeed(float NewSpeed)
