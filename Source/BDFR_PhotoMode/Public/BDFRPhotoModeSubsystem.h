@@ -2,11 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "BDFRPhotoModeTypes.h"
+#include "BDFRPhotoModePawn.h"
 #include "Subsystems/LocalPlayerSubsystem.h"
 #include "BDFRPhotoModeSubsystem.generated.h"
 
 class AActor;
-class ABDFRPhotoModePawn;
 class AHUD;
 class APawn;
 class APlayerController;
@@ -48,6 +48,24 @@ public:
 
     UFUNCTION(BlueprintCallable, Category="BDFR|Photo Mode|Camera")
     void SetFOV(float NewFOV);
+
+    UFUNCTION(BlueprintCallable, Category="BDFR|Photo Mode|Camera")
+    void SetCameraRoll(float RollDegrees)
+    {
+        if (ABDFRPhotoModePawn* Pawn = PhotoPawn.Get())
+        {
+            Pawn->SetCameraRoll(RollDegrees);
+        }
+    }
+
+    UFUNCTION(BlueprintCallable, Category="BDFR|Photo Mode|Cinematic")
+    void SetCinematicLens(float FocalLengthMm, float Aperture, float FocusDistanceCm)
+    {
+        if (ABDFRPhotoModePawn* Pawn = PhotoPawn.Get())
+        {
+            Pawn->SetCinematicLens(FocalLengthMm, Aperture, FocusDistanceCm);
+        }
+    }
 
     UFUNCTION(BlueprintCallable, Category="BDFR|Photo Mode|Camera")
     bool SetCameraMode(EBDFRPhotoCameraMode NewMode);
